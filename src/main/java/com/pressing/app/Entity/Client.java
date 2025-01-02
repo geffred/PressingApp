@@ -1,11 +1,19 @@
 package com.pressing.app.Entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "clients")
@@ -15,17 +23,29 @@ public class Client {
     @Column(name = "id")
     private Long id;
 
+    @NotEmpty(message = "Le nom ne peut pas être vide")
+    @NotNull(message = "Le nom ne peut pas être null")
     @Column(name = "nom")
     private String nom;
 
+    @NotEmpty(message = "Le prénom ne peut pas être vide")
+    @NotNull(message = "Le prénom ne peut pas être null")
     @Column(name = "prenom")
     private String prenom;
 
-    @Column(name = "email")
+    @NotEmpty(message = "L'email ne peut pas être vide")
+    @NotNull(message = "L'email ne peut pas être null")
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "telephone")
+    @NotEmpty(message = "Le téléphone ne peut pas être vide")
+    @NotNull(message = "Le téléphone ne peut pas être null")
+    @Column(name = "telephone", unique = true)
     private String telephone;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id", updatable = false)
+    private List<Commande> commandes;
 
     public Client() {
     }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/clients.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Paiement Form</title> <!-- Corrigé la capitalisation -->
+</head>
+<body>
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-lg-2 menu">
+                <ul>
+                    <li>
+                        <a th:href="@{/employes/}">Employés</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/clients/}">Clients</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/categories/}">Catégories</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/vetements/}">Vêtements</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/commandes/}">Commandes</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/paiements/}">Paiements</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-10">
+                <h1>Paiement Form</h1>
+                <form action="/paiements/add" th:object="${paiement}" method="post">
+                    <!-- Champ ID caché -->
+                    <input type="hidden" th:field="*{id}" />
+
+                    <!-- Champ Mode Paiement -->
+                    <div class="form-group">
+                        <label for="modePaiement">Mode Paiement</label> <!-- Corrigé "for" pour correspondre à l'id -->
+                        <select class="form-control" id="modePaiement" name="modePaiement" th:field="*{modePaiement}">
+                            <option th:value="ESPECE">Espèce</option>
+                            <option th:value="CARTE_BANCAIRE">Carte Bancaire</option>
+                            <option th:value="VIREMENT_BANCAIRE">Virement Bancaire</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('modePaiement')}" class="errors">
+                            <div th:errors="*{modePaiement}"></div>
+                        </div>
+                    </div>
+
+                    <!-- Champ Montant -->
+                    <div class="form-group">
+                        <label for="montant">Montant</label> <!-- Corrigé "for" pour correspondre à l'id -->
+                        <input class="form-control" type="text" id="montant" name="montant" th:field="*{montant}" />
+                        <div th:if="${#fields.hasErrors('montant')}" class="errors">
+                            <div th:errors="*{montant}"></div>
+                        </div> <!-- Fermeture de div ajoutée ici -->
+                    </div>
+
+                    <!-- Champ Date Paiement -->
+                    <div class="form-group">
+                        <label for="datePaiement">Date Paiement</label> <!-- Corrigé "for" pour correspondre à l'id -->
+                        <input class="form-control" type="date" id="datePaiement" name="datePaiement" th:field="*{datePaiement}" />
+                        <div th:if="${#fields.hasErrors('datePaiement')}" class="errors"> <!-- Corrigé dateaiement à datePaiement -->
+                            <div th:errors="*{datePaiement}"></div>
+                        </div>
+                    </div>
+
+                    <!-- Boutons -->
+                    <div class="my-2">
+                        <input type="submit" class="btn btn-dark" value="Ajouter" />
+                        <a th:href="@{/paiements/}" class="btn btn-dark">Liste des paiements</a>
+                    </div>
+                </form>
+                <span th:text="${message}"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

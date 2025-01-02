@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/clients.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Commande Form</title>
+</head>
+<body>
+    <div class="container-fluid main">
+        <div class="row">
+            <div class="col-lg-2 menu">
+                <ul>
+                     <li>
+                        <a th:href="@{/employes/}">Employés</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/clients/}">Clients</a>
+                    </li>
+                     <li>
+                        <a th:href="@{/categories/}">Categories</a>
+                    </li>
+                     <li>
+                        <a th:href="@{/vetements/}">vêtements</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/commandes/}">Commandes</a>
+                    </li>
+                     <li>
+                        <a th:href="@{/paiements/}">Paiements</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-10">
+                <h1>Commande Form</h1>
+                <form action="/commandes/add" th:object="${commande}" method="post">
+                    
+                    <input type="hidden" th:field="*{id}" />
+
+                     <div class="form-group">
+                        <label for="name">Employés</label>
+                        <select name="employe" id="employe" class="form-select" th:field="*{employe}">
+                            <option value="" th:text="'Sélectionnez un(e) employe(e)'"></option>
+                            <option th:each="employe : ${employes}" th:value="${employe.id}" >
+                                <span th:text="${employe.nom}"></span>
+                                (<span th:text="${employe.prenom}"></span>)
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('employe')}" class="errors">
+                            <div th:errors="*{employe}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Client</label>
+                        <select name="client" id="client" class="form-select" th:field="*{client}">
+                            <option value="" th:text="'Sélectionnez un(e) Client(e)'"></option>
+                            <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.nom}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('client')}" class="errors">
+                            <div th:errors="*{client}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">vêtements(s)</label>
+                        <select name="vetement" id="vetement" class="form-select" th:field="*{vetement}">
+                            <option value="" th:text="'Sélectionnez un vetement'"></option>
+                            <option th:each="vetement : ${vetements}" th:value="${vetement.id}">
+                                <span th:text="${vetement.categorie.nom}"></span>
+                                 (<span th:text="${vetement.quantite}"></span>)
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('vetement')}" class="errors">
+                            <div th:errors="*{vetement}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Date Commande</label>
+                        <input class="form-control" type="date" id="dateCommande" name="dateCommande" th:field="*{dateCommande}" />
+                        <div th:if="${#fields.hasErrors('dateCommande')}" class="errors">
+                            <div th:errors="*{dateCommande}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Date Livraison</label>
+                        <input class="form-control" type="date" id="dateLivraison" name="dateLivraison" th:field="*{dateLivraison}" />
+                        <div th:if="${#fields.hasErrors('dateLivraison')}" class="errors">
+                            <div th:errors="*{dateLivraison}"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name">Payee</label>
+                        <input  type="radio" id="payee" value="1" name="payee" th:field="*{payee}" />
+                        <div th:if="${#fields.hasErrors('payee')}" class="errors">
+                            <div th:errors="*{payee}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Non Payee</label>
+                        <input  type="radio" id="payee" value="0" name="payee" th:field="*{payee}" />
+                        <div th:if="${#fields.hasErrors('payee')}" class="errors">
+                            <div th:errors="*{payee}"></div>
+                        </div>
+                    </div>
+                   
+
+                    
+                    <div class="my-2">
+                        <input type="submit" class="btn btn-dark " value="Commander" />
+                        <a th:href="@{/commandes/}" class="btn btn-dark " >Liste des commandes</a>
+                    </div>
+                </form>
+                <span th:text="${message}" ></span>
+            
+            </div>
+        </div>
+    </div>
+</body>
+</html>

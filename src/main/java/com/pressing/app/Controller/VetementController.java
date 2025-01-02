@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pressing.app.Entity.Vetement;
+import com.pressing.app.Repository.CategorieRepository;
 import com.pressing.app.Repository.VetementRepository;
 
 import jakarta.validation.Valid;
@@ -17,41 +21,70 @@ import jakarta.validation.Valid;
 public class VetementController {
 
     private String message = "";
+    private Vetement vetementEdit = new Vetement();
 
     @Autowired
     private VetementRepository vetementRepository;
+    @Autowired
+    private CategorieRepository categorieRepository;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String getVetements(Model model) {
         message = "";
         model.addAttribute("vetements", vetementRepository.findAll());
         return "/vetements/vetements";
     }
 
-    @RequestMapping("/add")
-    public String addVetement(@Valid Vetement vetement, Model model, Errors errors) {
-        if (errors.hasErrors()) {
-            return "/vetements/vetementsForm";
-        }
-        vetementRepository.save(vetement);
-        message = "Vetement numéro " + vetement.getId() + " ajouté avec succès";
+    @GetMapping("/form")
+    public String vetementsForm(Model model) {
+        message = "";
+        vetementEdit = new Vetement();
+        model.addAttribute("vetement", vetementEdit);
+        model.addAttribute("categories", categorieRepository.findAll());
+
         return "/vetements/vetementsForm";
     }
 
-    @RequestMapping("/edit")
-    public String editVetement(@Valid Vetement vetement, Model model, Errors errors) {
+    @PostMapping("/add")
+    public String addVetement(@Valid Vetement vetement, Errors errors, Model model) {
         if (errors.hasErrors()) {
             return "/vetements/vetementsForm";
         }
+
+        message = "vêtement ajouté avec succès";
         vetementRepository.save(vetement);
-        message = "Vetement numéro " + vetement.getId() + " a été mis à jour avec succès";
+        model.addAttribute("message", message);
+        model.addAttribute("vetement", vetementEdit);
+        model.addAttribute("categories", categorieRepository.findAll());
         return "/vetements/vetementsForm";
     }
 
-    @RequestMapping("/delete/{id}")
-    public String deleteVetement(Long id, Model model) {
+    @PostMapping("/update")
+    public String updateVetement(@Valid Vetement vetement, Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("categories", categorieRepository.findAll());
+            return "/vetements/vetementsFormUpdate";
+        }
+        message = "vêtement numéro " + vetement.getId() + " modifié avec succès";
+        vetementRepository.save(vetement);
+        model.addAttribute("message", message);
+        model.addAttribute("vetement", vetementEdit);
+        model.addAttribute("categories", categorieRepository.findAll());
+        return "/vetements/vetementsFormUpdate";
+    }
+
+    @GetMapping("edit/{id}")
+    public String editFormVetement(@PathVariable Long id, Model model) {
+        vetementEdit = vetementRepository.findById(id).get();
+        model.addAttribute("vetement", vetementEdit);
+        model.addAttribute("categories", categorieRepository.findAll());
+        return "/vetements/vetementsFormUpdate";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteVetement(@PathVariable Long id, Model model) {
         vetementRepository.deleteById(id);
-        message = "Vetement numéro " + id + " supprimé avec succès";
-        return "/vetements/vetements";
+        message = "vêtement numéro " + id + " supprimé avec succès";
+        return "redirect:/vetements/";
     }
 }

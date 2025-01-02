@@ -12,6 +12,8 @@ import com.pressing.app.Repository.PaiementRepository;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/paiements")
@@ -20,38 +22,47 @@ public class PaiementController {
     private String message = "";
     @Autowired
     private PaiementRepository paiementRepository;
+    private Paiement paiementEdit = new Paiement();
 
     @GetMapping("/")
     public String getPaiement(Model model) {
         model.addAttribute("paiements", paiementRepository.findAll());
-        return "/Paiements/paiements";
+        return "Paiements/paiements";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/form")
+    public String paiementForm(Model model) {
+        model.addAttribute("paiement", paiementEdit);
+        return "Paiements/paiementsForm";
+    }
+
+    @PostMapping("/add")
     public String addPaiement(Model model, @Valid Paiement paiement, Errors errors) {
         if (errors.hasErrors()) {
             return "/Paiements/paiementsForm";
         }
+        if (paiement.getId() != null) {
+            message = "Paiement numéro " + paiement.getId() + " modifié avec succès";
+        } else {
+            message = "Paiement  ajouté avec succès";
+        }
         paiementRepository.save(paiement);
-        message = "Paiement numéro " + paiement.getId() + " ajouté avec succès";
+        model.addAttribute("message", message);
+        model.addAttribute("paiement", new Paiement());
         return "/Paiements/paiementsForm";
     }
 
-    @GetMapping("/edit")
-    public String editPaiement(Model model, @Valid Paiement paiement, Errors errors) {
-        if (errors.hasErrors()) {
-            return "/Paiements/paiementsForm";
-        }
-        paiementRepository.save(paiement);
-        message = "Paiement numéro " + paiement.getId() + " a été mis à jour avec succès";
-        return "/Paiements/paiementsForm";
+    @GetMapping("/edit/{id}")
+    public String editPaiement(@PathVariable Long id, Model model) {
+        paiementEdit = paiementRepository.findById(id).get();
+        return "redirect:/paiements/form";
     }
 
     @GetMapping("/delete/{id}")
     public String deletePaiement(Model model, Long id) {
         paiementRepository.deleteById(id);
         message = "Paiement numéro " + id + " supprimé avec succès";
-        return "/Paiements/paiements";
+        return "redirect:/paiements/";
     }
 
 }

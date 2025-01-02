@@ -1,11 +1,19 @@
 package com.pressing.app.Entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "employe")
@@ -16,11 +24,19 @@ public class Employe {
     @Column(name = "id")
     private Long id;
 
+    @NotNull(message = "Le nom ne peut pas être null")
+    @NotEmpty(message = "Le nom ne peut pas être vide")
     @Column(name = "nom")
     private String nom;
 
+    @NotNull(message = "Le nom ne peut pas être null")
+    @NotEmpty(message = "Le nom ne peut pas être vide")
     @Column(name = "prenom")
     private String prenom;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "employe_id", updatable = false)
+    private List<Commande> commandes;
 
     public Employe() {
     }
@@ -52,5 +68,13 @@ public class Employe {
 
     public String getPrenom() {
         return prenom;
+    }
+
+    public List<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
     }
 }
