@@ -27,6 +27,7 @@ public class EmployeController {
     @GetMapping("/")
     public String getEmployes(Model model) {
         model.addAttribute("employes", employeRepository.findAll());
+        model.addAttribute("message", message);
         message = "";
         return "/Employes/employes";
     }
@@ -67,9 +68,12 @@ public class EmployeController {
 
     @GetMapping("/delete/{id}")
     public String deleteEmploye(@PathVariable Long id, Model model) {
-        employeRepository.deleteById(id);
-        message = "l'employé supprimé avec succès";
-        model.addAttribute("message", message);
+        try {
+            employeRepository.deleteById(id);
+            message = "Employé supprimé avec succès";
+        } catch (Exception e) {
+            message = "Erreur lors de la suppression de l'employé";
+        }
         return "redirect:/employes/";
     }
 

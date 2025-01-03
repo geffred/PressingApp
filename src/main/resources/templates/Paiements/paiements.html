@@ -6,133 +6,117 @@
     <link rel="stylesheet" href="../css/paiements.css">
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>paiements</title>
+    <title>Paiements</title>
 </head>
 <body>
-     <header>
+    <header>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand d-felx align-items-center" href="/">
-                    <img src="../img/cloth-white.svg" alt="" width="25" class="me-2">
-                     PressingApp
-                 </a>
+                <a class="navbar-brand d-flex align-items-center" href="/">
+                    <img src="../img/cloth-white.svg" alt="PressingApp" width="25" class="me-2"> PressingApp
+                </a>
             </div>
         </nav>
     </header>
     <main class="container-fluid main">
-        <img src="../img/bg.jpg" alt="">
+        <img src="../img/bg.jpg" alt="Background Image" class="img-fluid">
         <div class="row">
-            <div class="menu col-lg-2">
+            <div class="col-lg-2 menu">
                 <ul>
-                    <li>
-                        <a th:href="@{/employes/}">Employés</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/clients/}">Clients</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/categories/}">Categories</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/vetements/}">vêtements</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/commandes/}">Commandes</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/paiements/}">Paiements</a>
-                    </li>
+                    <li><a th:href="@{/employes/}">Employés</a></li>
+                    <li><a th:href="@{/clients/}">Clients</a></li>
+                    <li><a th:href="@{/categories/}">Catégories</a></li>
+                    <li><a th:href="@{/vetements/}">Vêtements</a></li>
+                    <li><a th:href="@{/commandes/}">Commandes</a></li>
+                    <li><a th:href="@{/paiements/}">Paiements</a></li>
                 </ul>
-
             </div>
             <div class="col-lg-10">
-                <h1>paiements</h1>
+                <h1>Paiements</h1>
                 <form action="/paiements/filter" method="get">
-                        <div class="py-2 row align-items-center">
-                            <div class="col-lg-10">
-                                <input name="rechercher" type="text" class="form-control" placeholder="Rechercher une commande par nom client...">
-                            </div>
-                            <div class="col-lg-2">
-                                <button class="btn btn-dark">Rechercher</button>
-                            </div>
+                    <div class="py-2 row align-items-center">
+                        <div class="col-lg-10">
+                            <input name="rechercher" type="text" class="form-control" placeholder="Rechercher une commande par nom client...">
                         </div>
-                        <div class="radio_box">
-                            <div>
-                                <input type="radio" name="payee" id="payee" value="true">
-                                <label for="payee">Payée</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="payee" id="nonpayee" value="false">
-                                <label for="nonpayee">Non Payée</label>
-                            </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-dark">Rechercher</button>
                         </div>
-                        <div class="py-2 row">
-                            <div class="col-lg-6">
-                                <label for="dateDebut">Date de début :</label>
-                                <input name="dateDebut" type="date" class="form-control">
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="dateFin">Date de fin :</label>
-                                <input name="dateFin" type="date" class="form-control">
-                            </div>
+                    </div>
+                    <div class="radio_box">
+                        <div>
+                            <input type="radio" name="payee" id="payee" value="true" aria-label="Payée">
+                            <label for="payee">Payée</label>
                         </div>
-                    </form>
+                        <div>
+                            <input type="radio" name="payee" id="nonpayee" value="false" aria-label="Non Payée">
+                            <label for="nonpayee">Non Payée</label>
+                        </div>
+                    </div>
+                    <div class="py-2 row">
+                        <div class="col-lg-6">
+                            <label for="dateDebut">Date de début :</label>
+                            <input name="dateDebut" type="date" class="form-control" aria-label="Date de début">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="dateFin">Date de fin :</label>
+                            <input name="dateFin" type="date" class="form-control" aria-label="Date de fin">
+                        </div>
+                    </div>
+                </form>
 
-                <table class="table  ">
+                <table class="table">
                     <thead class="bg-dark">
                         <tr>
-                        <th>#</th>
-                        <th>Commande</th>
-                        <th>Mode Paiement</th>
-                        <th>Montant</th>
-                        <th>Date Paiement</th>
-                        <th>Edition</th>
-                    </tr>
+                            <th>#</th>
+                            <th>Commande</th>
+                            <th>Mode Paiement</th>
+                            <th>Montant</th>
+                            <th>Date Paiement</th>
+                            <th>Edition</th>
+                        </tr>
                     </thead>
-                <tbody>
-                    <tr th:each="paiement : ${paiements}">
-
-                        <td th:text="${paiement.id}"></td>
-                        <td>
-                           Client : <span th:text="${paiement.commande.client.nom}"></span>
-                           <span th:text="${paiement.commande.client.prenom}"></span>
-                            <br>
-                           Date Commande : <span th:text="${paiement.commande.dateCommande}"></span>
-                            <br>
-                           Payer : <span th:text="${paiement.commande.payee}"></span>
-                        </td>
-                        <td th:text="${paiement.modePaiement}"></td>
-                        <td th:text="${paiement.montant}"></td>
-                        <td th:text="${paiement.datePaiement}"></td>
-                     
-                        <td>
-                            <a th:href="@{/paiements/edit/{id}(id = ${paiement.id})}" class="btn btn-dark">Modifier</a>
-                            <a th:href="@{/paiements/delete/{id}(id = ${paiement.id})}"  class="btn btn-danger">Supprimer</a>
-                        </td>
-                    </tr>
-                </tbody>
+                    <tbody>
+                        <tr th:each="paiement : ${paiements}">
+                            <td th:text="${paiement.id}"></td>
+                            <td>
+                                Client : <span th:text="${paiement.commande.client.nom}"></span> <span th:text="${paiement.commande.client.prenom}"></span><br>
+                                Date Commande : <span th:text="${paiement.commande.dateCommande}"></span><br>
+                                Payer : <span th:text="${paiement.commande.payee}"></span>
+                            </td>
+                            <td th:text="${paiement.modePaiement}"></td>
+                            <td >
+                                <span th:text="${paiement.montant}"></span> €
+                            </td>
+                            <td th:text="${paiement.datePaiement}"></td>
+                            <td>
+                                <a th:href="@{/paiements/edit/{id}(id=${paiement.id})}" class="btn btn-dark">Modifier</a>
+                                <a th:href="@{/paiements/delete/{id}(id=${paiement.id})}" class="btn btn-danger">Supprimer</a>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
-                <a href="/" class="btn btn-dark " >Acceuil</a>
+                <a href="/" class="btn btn-dark">Accueil</a>
                 <a th:href="@{/paiements/form}" class="btn btn-dark">Ajouter un paiement</a>
+                <div th:if="${message} !='' " th:text="${message}" class="errors" ><div></div>
             </div>
         </div>
     </main>
     <footer class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <p>2025 &copy; Tous droits réservés</p>
-                </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <p>2025 &copy; Tous droits réservés</p>
             </div>
+        </div>
     </footer>
-<script>
-    const paiements = document.querySelectorAll('.btn-danger');
-    paiements.forEach((btn)=>{
-    btn.addEventListener('click',(e)=>{
-       if( !window.confirm("Voulez-vous vraiment effectuer cette suppression?")){
-            e.preventDefault()
-       }
-    }) });
-
-</script>
+    <script>
+        const paiements = document.querySelectorAll('.btn-danger');
+        paiements.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                if (!window.confirm("Voulez-vous vraiment effectuer cette suppression?")) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

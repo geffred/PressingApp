@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand d-felx align-items-center" href="/">
+                <a class="navbar-brand d-flex align-items-center" href="/">
                     <img src="../img/cloth-white.svg" alt="" width="25" class="me-2">
                      PressingApp
                  </a>
@@ -31,10 +31,10 @@
                         <a th:href="@{/clients/}">Clients</a>
                     </li>
                     <li>
-                        <a th:href="@{/categories/}">Categories</a>
+                        <a th:href="@{/categories/}">Catégories</a>
                     </li>
                     <li>
-                        <a th:href="@{/vetements/}">Vetements</a>
+                        <a th:href="@{/vetements/}">Vêtements</a>
                     </li>
                     <li>
                         <a th:href="@{/commandes/}">Commandes</a>
@@ -48,9 +48,9 @@
             <div class="col-lg-10">
                 <h1>Clients</h1>
                 <form action="/clients/filter" method="get">
-                    <div class="py-2 row d-felx align-items-center">
+                    <div class="py-2 row d-flex align-items-center">
                        <div class="col-lg-10">
-                         <input name="rechercher" type="text" class="form-control" placeholder="Rechercher un client (nom ou email) ...">
+                         <input name="rechercher" type="text" class="form-control" placeholder="Rechercher un client (nom ou email)...">
                        </div>
                         <div class="col-lg-2">
                              <button class="btn btn-dark">Rechercher</button>
@@ -58,15 +58,15 @@
                     </div>
 
                 </form>
-                <table class="table  ">
-                    <thead class="bg-dark">
+                <table class="table">
+                    <thead class="bg-dark text-white">
                         <tr>
                         <th>#</th>
                         <th>Nom</th>
-                        <th>Prenom</th>
+                        <th>Prénom</th>
                         <th>Email</th>
-                        <th>Phone</th>
-                        <th>Edition</th>
+                        <th>Téléphone</th>
+                        <th>Édition</th>
                     </tr>
                     </thead>
                 <tbody>
@@ -78,13 +78,14 @@
                         <td th:text="${client.telephone}"></td>
                         <td>
                             <a th:href="@{/clients/edit/{id}(id = ${client.id})}" class="btn btn-dark">Modifier</a>
-                            <a th:href="@{/clients/delete/{id}(id = ${client.id})}"  class="btn btn-danger">Supprimer</a>
+                            <a th:href="@{/clients/delete/{id}(id = ${client.id})}" class="btn btn-danger">Supprimer</a>
                         </td>
                     </tr>
                 </tbody>
                 </table>
-                <a href="/" class="btn btn-dark " >Acceuil</a>
-                <a href="/clients/form" class="btn btn-dark">Ajouter un Client</a>
+                <a href="/" class="btn btn-dark">Accueil</a>
+                <a href="/clients/form" class="btn btn-dark">Ajouter un client</a>
+                <div th:if="${message} !='' " th:text="${message}" class="errors" ><div></div>
             </div>
         </div>
     </main>
@@ -97,13 +98,13 @@
     </footer>
 <script>
     const clients = document.querySelectorAll('.btn-danger');
-    clients.forEach((btn)=>{
-    btn.addEventListener('click',(e)=>{
-       if( !window.confirm("Voulez-vous vraiment effectuer cette suppression?")){
-            e.preventDefault()
-       }
-    }) });
-
+    clients.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            if (!window.confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
+                e.preventDefault();
+            }
+        });
+    });
 </script>
 </body>
 </html>

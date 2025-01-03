@@ -26,6 +26,7 @@ public class CategorieController {
     @GetMapping("/")
     public String getCategories(Model model) {
         model.addAttribute("categories", categorieRepository.findAll());
+        model.addAttribute("message", message);
         message = "";
         return "/Categories/categories";
     }
@@ -59,12 +60,15 @@ public class CategorieController {
         return "/Categories/categoriesForm";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteCategorie(@PathVariable Long id, Model model) {
-        categorieRepository.deleteById(id);
-        message = "La catégorie supprimée avec succès";
-        model.addAttribute("message", message);
-        return "/Categories/categories";
+        try {
+            categorieRepository.deleteById(id);
+            message = "La catégorie supprimée avec succès";
+        } catch (Exception e) {
+            message = "Erreur lors de la suppression de la catégorie , cette catégorie est utilisée dans une commande";
+        }
+        return "redirect:/categories/";
     }
 
     @GetMapping("/edit/{id}")

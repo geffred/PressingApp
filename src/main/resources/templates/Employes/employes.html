@@ -12,18 +12,18 @@
      <header>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand d-felx align-items-center" href="/">
-                    <img src="../img/cloth-white.svg" alt="" width="25" class="me-2">
+                <a class="navbar-brand d-flex align-items-center" href="/">
+                    <img src="../img/cloth-white.svg" alt="Logo PressingApp" width="25" class="me-2">
                      PressingApp
                  </a>
             </div>
         </nav>
     </header>
     <main class="container-fluid main">
-        <img src="../img/bg.jpg" alt="">
+        <img src="../img/bg.jpg" alt="Background" class="img-fluid">
         <div class="row">
             <div class="menu col-lg-2">
-                <ul>
+                <ul class="list-unstyled">
                     <li>
                         <a th:href="@{/employes/}">Employés</a>
                     </li>
@@ -31,10 +31,10 @@
                         <a th:href="@{/clients/}">Clients</a>
                     </li>
                     <li>
-                        <a th:href="@{/categories/}">Categories</a>
+                        <a th:href="@{/categories/}">Catégories</a>
                     </li>
                     <li>
-                        <a th:href="@{/vetements/}">Vetements</a>
+                        <a th:href="@{/vetements/}">Vêtements</a>
                     </li>
                     <li>
                         <a th:href="@{/commandes/}">Commandes</a>
@@ -43,17 +43,16 @@
                         <a th:href="@{/paiements/}">Paiements</a>
                     </li>
                 </ul>
-
             </div>
             <div class="col-lg-10">
-                <h1>employes</h1>
-                <table class="table  ">
-                    <thead class="bg-dark">
+                <h1>Employés</h1>
+                <table class="table">
+                    <thead class="bg-dark text-white">
                         <tr>
                         <th>#</th>
                         <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Edition</th>
+                        <th>Prénom</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                 <tbody>
@@ -63,13 +62,16 @@
                         <td th:text="${employe.prenom}"></td>
                         <td>
                             <a th:href="@{/employes/edit/{id}(id = ${employe.id})}" class="btn btn-dark">Modifier</a>
-                            <a th:href="@{/employes/delete/{id}(id = ${employe.id})}"  class="btn btn-danger">Supprimer</a>
+                            <a th:href="@{/employes/delete/{id}(id = ${employe.id})}" class="btn btn-danger">Supprimer</a>
                         </td>
                     </tr>
                 </tbody>
                 </table>
-                <a href="/" class="btn btn-dark " >Acceuil</a>
-                <a th:href="@{/employes/form}" class="btn btn-dark">Ajouter un employe</a>
+                <div class="d-flex justify-content-start">
+                    <a href="/" class="btn btn-dark me-2">Accueil</a>
+                    <a th:href="@{/employes/form}" class="btn btn-dark">Ajouter un employé</a>
+                </div>
+                <div th:if="${message} !='' " th:text="${message}" class="errors" ><div>
             </div>
         </div>
     </main>
@@ -82,13 +84,13 @@
     </footer>
 <script>
     const employes = document.querySelectorAll('.btn-danger');
-    employes.forEach((btn)=>{
-    btn.addEventListener('click',(e)=>{
-       if( !window.confirm("Voulez-vous vraiment effectuer cette suppression?")){
-            e.preventDefault()
-       }
-    }) });
-
+    employes.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            if (!window.confirm("Voulez-vous vraiment effectuer cette suppression ?")) {
+                e.preventDefault();
+            }
+        });
+    });
 </script>
 </body>
 </html>

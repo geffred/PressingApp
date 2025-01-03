@@ -30,8 +30,9 @@ public class VetementController {
 
     @GetMapping("/")
     public String getVetements(Model model) {
-        message = "";
         model.addAttribute("vetements", vetementRepository.findAll());
+        model.addAttribute("message", message);
+        message = "";
         return "/vetements/vetements";
     }
 
@@ -83,8 +84,12 @@ public class VetementController {
 
     @GetMapping("/delete/{id}")
     public String deleteVetement(@PathVariable Long id, Model model) {
-        vetementRepository.deleteById(id);
-        message = "vêtement numéro " + id + " supprimé avec succès";
+        try {
+            vetementRepository.deleteById(id);
+            message = "vêtement numéro " + id + " supprimé avec succès";
+        } catch (Exception e) {
+            message = "Erreur lors de la suppression du vêtement numéro " + id;
+        }
         return "redirect:/vetements/";
     }
 }

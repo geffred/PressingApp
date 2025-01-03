@@ -40,8 +40,10 @@ public class PaiementController {
     public String getPaiement(Model model) {
         model.addAttribute("paiements", paiementRepository.findAll());
         model.addAttribute("commandes", commandeRepository.findAll());
+        model.addAttribute("message", message);
         model.addAttribute("paiement", new Paiement());
         paiementEdit = new Paiement();
+        message = "";
         return "Paiements/paiements";
     }
 
@@ -125,8 +127,12 @@ public class PaiementController {
 
     @GetMapping("/delete/{id}")
     public String deletePaiement(@PathVariable Long id, Model model) {
-        paiementRepository.deleteById(id);
-        message = "Paiement numéro " + id + " supprimé avec succès.";
+        try {
+            paiementRepository.deleteById(id);
+            message = "Paiement numéro " + id + " supprimé avec succès.";
+        } catch (Exception e) {
+            message = "Erreur lors de la suppression du paiement : " + e.getMessage();
+        }
         return "redirect:/paiements/";
     }
 }

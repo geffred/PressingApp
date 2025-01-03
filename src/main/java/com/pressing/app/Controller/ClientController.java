@@ -32,6 +32,7 @@ public class ClientController {
 
         model.addAttribute("clients", clientRepository.findAll());
         model.addAttribute("client", new Client());
+        model.addAttribute("message", message);
         message = "";
         return "clients/clients";
     }
@@ -105,9 +106,13 @@ public class ClientController {
 
     @GetMapping("/delete/{id}")
     public String deleteClient(@PathVariable Long id, Model model) {
-        clientRepository.deleteById(id);
-        message = "Client supprimé avec succès";
-        model.addAttribute("message", message);
+
+        try {
+            clientRepository.deleteById(id);
+            message = "Client supprimé avec succès";
+        } catch (Exception e) {
+            message = "Erreur lors de la suppression du client";
+        }
         return "redirect:/clients/";
     }
 

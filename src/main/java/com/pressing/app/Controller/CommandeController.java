@@ -46,6 +46,7 @@ public class CommandeController {
     @GetMapping("/")
     public String getCommande(Model model) {
         model.addAttribute("commandes", commandeRepository.findAll());
+        model.addAttribute("message", message);
         commandeEdit = new Commande();
         message = "";
         return "/commandes/commandes";
@@ -164,9 +165,12 @@ public class CommandeController {
 
     @GetMapping("/delete/{id}")
     public String deleteCommande(@PathVariable Long id, Model model) {
-        commandeRepository.deleteById(id);
-        message = "Commande numéro " + id + " supprimée avec succès";
-        model.addAttribute("message", message);
+        try {
+            commandeRepository.deleteById(id);
+            message = "Commande numéro " + id + " supprimée avec succès";
+        } catch (Exception e) {
+            message = "Impossible de supprimer la commande numéro " + id;
+        }
         return "redirect:/commandes/";
     }
 
