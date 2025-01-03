@@ -43,14 +43,19 @@ public class CategorieController {
         if (errors.hasErrors()) {
             return "/Categories/categoriesForm";
         }
-        if (categorie.getId() != null) {
-            message = "Catégorie " + categorie.getNom() + " modifiée avec succès";
-        } else {
-            message = "Catégorie " + categorie.getNom() + " ajoutée avec succès";
+        try {
+            if (categorie.getId() != null) {
+                message = "Catégorie " + categorie.getNom() + " modifiée avec succès";
+            } else {
+                message = "Catégorie " + categorie.getNom() + " ajoutée avec succès";
+            }
+            categorieRepository.save(categorie);
+            model.addAttribute("message", message);
+            model.addAttribute("categorie", new Categorie());
+        } catch (Exception e) {
+            message = "Erreur lors de l'ajout de la catégorie , cette catégorie existe déjà";
+            model.addAttribute("message", message);
         }
-        categorieRepository.save(categorie);
-        model.addAttribute("message", message);
-        model.addAttribute("categorie", new Categorie());
         return "/Categories/categoriesForm";
     }
 

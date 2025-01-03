@@ -27,12 +27,10 @@ public class Paiement {
     @Column(name = "id")
     private Long id;
 
-    @NotEmpty(message = "Le mode de paiement ne doit pas être vide")
     @NotNull(message = "Le mode de paiement ne doit pas être vide")
     private ModePaiement modePaiement;
 
     @Min(value = 0, message = "le montant doit être positif")
-    @NotEmpty(message = "le montant ne doit pas être vide")
     @NotNull(message = "le montant ne doit pas être null")
     private double montant;
 
@@ -83,6 +81,14 @@ public class Paiement {
 
     public void setMontant(double montant) {
         this.montant = montant;
+    }
+
+    public Commande getCommande() {
+        return commande;
+    }
+
+    public void setCommande(Commande commande) {
+        this.commande = commande;
     }
 
 }

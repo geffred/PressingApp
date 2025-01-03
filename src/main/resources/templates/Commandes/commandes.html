@@ -37,10 +37,35 @@
             </div>
             <div class="col-lg-10">
                 <h1>Commandes</h1>
+                <form action="/commandes/filter" method="get">
+                    <div class="py-2 row d-felx align-items-center">
+                       <div class="col-lg-10">
+                         <input name="rechercher" type="text" class="form-control" placeholder="Rechercher une commande par nom client ...">
+                       </div>
+                        <div class="col-lg-2">
+                             <button class="btn btn-dark">Rechercher</button>
+                       </div>
+                    </div>
+                    <div class="radio_box">
+                        <div>
+                            <input type="radio" name="payee" id="payee" value="true">
+                            <label for="payee">Payée</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="payee" id="nonpayee" value="false">
+                            <label for="nonpayee">Non Payée</label>
+                        </div>
+                    </div>
+
+                </form>
+               
                 <table class="table  ">
                     <thead class="bg-dark">
                         <tr>
                         <th>#</th>
+                        <th>Employés</th>
+                        <th>Clients</th>
+                        <th>vêtements</th>
                         <th>Date Commande</th>
                         <th>Date Livraison</th>
                         <th>Payee</th>
@@ -49,7 +74,22 @@
                     </thead>
                 <tbody>
                     <tr th:each="commande : ${commandes}">
+                       
                         <td th:text="${commande.id}"></td>
+                         <td>
+                            <span th:text="${commande.employe.nom}"></span>
+                            (<span th:text="${commande.employe.prenom}"></span>)
+                        </td>
+                         <td>
+                            <span th:text="${commande.client.nom}"></span>
+                            (<span th:text="${commande.client.prenom}"></span>)
+                        </td>
+
+                        <td>
+                            <span th:text="${commande.vetement.categorie.nom}"></span>
+                            (<span th:text="${commande.vetement.quantite}"></span>)
+                        </td>
+
                         <td th:text="${commande.dateCommande}"></td>
                          <td th:text="${commande.dateLivraison}"></td>
                         <td th:text="${commande.payee}"></td>

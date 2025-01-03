@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/clients.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Paiement Form</title> <!-- Corrigé la capitalisation -->
+    <title>Paiement Form Update</title> <!-- Corrigé la capitalisation -->
 </head>
 <body>
     <div class="container-fluid main">
@@ -34,8 +34,8 @@
                 </ul>
             </div>
             <div class="col-lg-10">
-                <h1>Paiement Form</h1>
-                <form action="/paiements/add" th:object="${paiement}" method="post">
+                <h1>Paiement Form Update</h1>
+                <form action="/paiements/update" th:object="${paiement}" method="post">
                     <!-- Champ ID caché -->
                     <input type="hidden" th:field="*{id}" />
 
@@ -52,7 +52,6 @@
                         </div>
                     </div>
 
-
                     <!-- Champ Mode Paiement -->
                     <div class="form-group">
                         <label for="modePaiement">Mode Paiement</label> <!-- Corrigé "for" pour correspondre à l'id -->
@@ -68,8 +67,8 @@
 
                     <!-- Champ Montant -->
                     <div class="form-group">
-                        <label for="montant">Montant(auto)</label> <!-- Corrigé "for" pour correspondre à l'id -->
-                        <input disabled class="form-control" type="text" id="montant" name="montant" th:field="*{montant}" placeholder="Auto" />
+                        <label for="montant">Montant</label> <!-- Corrigé "for" pour correspondre à l'id -->
+                        <input class="form-control" type="text" id="montant" name="montant" th:field="*{montant}" />
                         <div th:if="${#fields.hasErrors('montant')}" class="errors">
                             <div th:errors="*{montant}"></div>
                         </div> <!-- Fermeture de div ajoutée ici -->

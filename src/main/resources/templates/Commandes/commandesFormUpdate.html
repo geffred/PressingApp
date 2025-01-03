@@ -35,9 +35,48 @@
             </div>
             <div class="col-lg-10">
                 <h1>Commande Form Update</h1>
-                <form action="/commandes/add" th:object="${commande}" method="post">
+                <form action="/commandes/update" th:object="${commande}" method="post">
                     
                     <input type="hidden" th:field="*{id}" />
+
+                    <div class="form-group">
+                        <label for="name">Employés</label>
+                        <select name="employe" id="employe" class="form-select" th:field="*{employe}">
+                            <option value="" th:text="'Sélectionnez un(e) employe(e)'"></option>
+                            <option th:each="employe : ${employes}" th:value="${employe.id}" >
+                                <span th:text="${employe.nom}"></span>
+                                (<span th:text="${employe.prenom}"></span>)
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('employe')}" class="errors">
+                            <div th:errors="*{employe}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Client</label>
+                        <select name="client" id="client" class="form-select" th:field="*{client}">
+                            <option value="" th:text="'Sélectionnez un(e) Client(e)'"></option>
+                            <option th:each="client : ${clients}" th:value="${client.id}" th:text="${client.nom}"></option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('client')}" class="errors">
+                            <div th:errors="*{client}"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">vêtements(s)</label>
+                        <select name="vetement" id="vetement" class="form-select" th:field="*{vetement}">
+                            <option value="" th:text="'Sélectionnez un vetement'"></option>
+                            <option th:each="vetement : ${vetements}" th:value="${vetement.id}">
+                                <span th:text="${vetement.categorie.nom}"></span>
+                                 (<span th:text="${vetement.quantite}"></span>)
+                            </option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('vetement')}" class="errors">
+                            <div th:errors="*{vetement}"></div>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="name">Date Commande</label>

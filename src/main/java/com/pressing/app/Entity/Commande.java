@@ -17,6 +17,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
 @Table(name = "commandes")
@@ -28,7 +29,7 @@ public class Commande {
     private Long id;
 
     @NotNull(message = "Le champ date de commande ne peut pas être vide")
-    @FutureOrPresent(message = "La date de commande doit être dans le futur ou aujourd'hui")
+    @PastOrPresent(message = "La date de commande doit être dans le passé ou aujourd'hui")
     @Column(name = "dateCommande")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateCommande;

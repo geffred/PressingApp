@@ -21,7 +21,7 @@
                         <a th:href="@{/clients/}">Clients</a>
                     </li>
                     <li>
-                        <a th:href="@{/categories}">Categories</a>
+                        <a th:href="@{/categories/}">Categories</a>
                     </li>
                     <li>
                         <a th:href="@{/vetements/}">vêtements</a>
@@ -37,10 +37,42 @@
             </div>
             <div class="col-lg-10">
                 <h1>paiements</h1>
+                <form action="/paiements/filter" method="get">
+                        <div class="py-2 row align-items-center">
+                            <div class="col-lg-10">
+                                <input name="rechercher" type="text" class="form-control" placeholder="Rechercher une commande par nom client...">
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-dark">Rechercher</button>
+                            </div>
+                        </div>
+                        <div class="radio_box">
+                            <div>
+                                <input type="radio" name="payee" id="payee" value="true">
+                                <label for="payee">Payée</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="payee" id="nonpayee" value="false">
+                                <label for="nonpayee">Non Payée</label>
+                            </div>
+                        </div>
+                        <div class="py-2 row">
+                            <div class="col-lg-6">
+                                <label for="dateDebut">Date de début :</label>
+                                <input name="dateDebut" type="date" class="form-control">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="dateFin">Date de fin :</label>
+                                <input name="dateFin" type="date" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+
                 <table class="table  ">
                     <thead class="bg-dark">
                         <tr>
                         <th>#</th>
+                        <th>Commande</th>
                         <th>Mode Paiement</th>
                         <th>Montant</th>
                         <th>Date Paiement</th>
@@ -49,7 +81,16 @@
                     </thead>
                 <tbody>
                     <tr th:each="paiement : ${paiements}">
+
                         <td th:text="${paiement.id}"></td>
+                        <td>
+                           Client : <span th:text="${paiement.commande.client.nom}"></span>
+                           <span th:text="${paiement.commande.client.prenom}"></span>
+                            <br>
+                           Date Commande : <span th:text="${paiement.commande.dateCommande}"></span>
+                            <br>
+                           Payer : <span th:text="${paiement.commande.payee}"></span>
+                        </td>
                         <td th:text="${paiement.modePaiement}"></td>
                         <td th:text="${paiement.montant}"></td>
                         <td th:text="${paiement.datePaiement}"></td>

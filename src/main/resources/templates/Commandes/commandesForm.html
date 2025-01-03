@@ -95,7 +95,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="name">Payee</label>
+                        <label for="payee">Payee</label>
                         <input  type="radio" id="payee" value="1" name="payee" th:field="*{payee}" />
                         <div th:if="${#fields.hasErrors('payee')}" class="errors">
                             <div th:errors="*{payee}"></div>
@@ -103,8 +103,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Non Payee</label>
-                        <input  type="radio" id="payee" value="0" name="payee" th:field="*{payee}" />
+                        <label for="nonpayee">Non Payee</label>
+                        <input  type="radio" id="nonpayee" value="0" name="payee" th:field="*{payee}" />
                         <div th:if="${#fields.hasErrors('payee')}" class="errors">
                             <div th:errors="*{payee}"></div>
                         </div>

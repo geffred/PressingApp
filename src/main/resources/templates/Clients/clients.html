@@ -37,6 +37,17 @@
             </div>
             <div class="col-lg-10">
                 <h1>Clients</h1>
+                <form action="/clients/filter" method="get">
+                    <div class="py-2 row d-felx align-items-center">
+                       <div class="col-lg-10">
+                         <input name="rechercher" type="text" class="form-control" placeholder="Rechercher un client (nom ou email) ...">
+                       </div>
+                        <div class="col-lg-2">
+                             <button class="btn btn-dark">Rechercher</button>
+                       </div>
+                    </div>
+
+                </form>
                 <table class="table  ">
                     <thead class="bg-dark">
                         <tr>

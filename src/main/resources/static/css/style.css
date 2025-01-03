@@ -5,6 +5,13 @@
 
 .main{
     margin-top: 25px;
+    position: relative;
+}
+
+.main img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
 
 h1{
@@ -48,7 +55,12 @@ tr{
     border-radius: 10px;
     background: black;
     padding: 10px 0px 25px 15px;
+    height: 100%;
 }
+.menu{
+    height: 100vh;
+}
+
 
 
 .menu ul li a{
@@ -70,3 +82,20 @@ tr{
     background: white;
     color: black;
 }
+
+.radio_box{
+    padding: 10px;
+   display: flex !important;
+   gap: 10px;
+}
+
+.errors{
+    color: red;
+    font-size: 0.8em;
+    margin-top: 2px;
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 0, 0, 0.151);
+    border-radius: 5px;
+}
+
